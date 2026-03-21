@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TheByteSmith Co. — IT Solutions</title>
+  <meta name="description" content="TheByteSmith Co. — Next-gen IT solutions built by two 16-year-old founders. Featuring XYZ, our flagship product."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --ink:      #020a18;
+      --deep:     #040e22;
+      --void:     #060f28;
+      --surface:  #09183a;
+      --panel:    #0c1f48;
+      --rim:      #112b5e;
+      --edge:     #163470;
+      --blue:     #1a6fff;
+      --bright:   #3d8dff;
+      --electric: #00c3ff;
+      --ice:      #80dfff;
+      --text:     #b8d4f5;
+      --muted:    #6090c0;
+      --dim:      #385880;
+      --white:    #eaf4ff;
+      --scan:     rgba(0,195,255,.025);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--ink); color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-weight: 400; line-height: 1.6;
+      overflow-x: hidden; -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* Scanlines */
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, var(--scan) 2px, var(--scan) 4px);
+    }
+
+    /* BG */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,195,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,195,255,.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .bg-glow { position: fixed; pointer-events: none; border-radius: 50%; filter: blur(130px); z-index: 0; }
+    .glow-a { width:700px; height:700px; background:rgba(0,80,255,.09);  top:-300px; left:-300px; }
+    .glow-b { width:600px; height:600px; background:rgba(0,195,255,.07); bottom:-200px; right:-200px; }
+    .glow-c { width:400px; height:400px; background:rgba(26,111,255,.06); top:40%; left:55%; transform:translate(-50%,-50%); transition:transform .1s linear; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 68px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6%;
+      border-bottom: 1px solid rgba(0,195,255,.08);
+      background: rgba(2,10,24,.92); backdrop-filter: blur(20px) saturate(180%);
+    }
+    .logo { display: flex; align-items: center; gap: .7rem; font-family: 'Rajdhani', sans-serif; font-weight: 700; color: var(--white); }
+    .logo-mark {
+      width: 36px; height: 36px; border-radius: 8px;
+      border: 1.5px solid var(--electric);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .logo-mark::before {
+      content: ''; position: absolute; inset: -50%;
+      background: conic-gradient(from 0deg, transparent 60%, rgba(0,195,255,.3) 100%);
+      animation: spin 4s linear infinite;
+    }
+    .logo-mark span { position: relative; z-index: 1; font-size: .85rem; font-weight: 700; color: var(--electric); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .logo-text { display: flex; flex-direction: column; line-height: 1; }
+    .logo-name { font-size: 1.1rem; color: var(--white); }
+    .logo-sub  { font-size: .62rem; color: var(--muted); letter-spacing: 2px; font-weight: 500; }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: .92rem; letter-spacing: 1.5px; text-transform: uppercase; }
+    .nav-links a { color: var(--muted); transition: color .2s; }
+    .nav-links a:hover { color: var(--electric); }
+
+    .nav-btn { font-family: 'Space Mono', monospace; font-size: .7rem; letter-spacing: 1px; color: var(--electric); border: 1px solid var(--electric); padding: .5rem 1.3rem; border-radius: 4px; background: transparent; cursor: pointer; transition: background .2s, color .2s; }
+    .nav-btn:hover { background: var(--electric); color: var(--ink); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: .4rem; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh; padding: 9rem 6% 6rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .7rem;
+      font-family: 'Space Mono', monospace; font-size: .7rem; color: var(--electric);
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.8rem;
+      animation: fadeUp .6s ease both;
+    }
+    .eyebrow-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--electric), transparent); max-width: 40px; }
+    .eyebrow-dot  { width: 5px; height: 5px; border-radius: 50%; background: var(--electric); animation: blink 2s ease infinite; }
+    @keyframes blink  { 0%,100%{opacity:1} 50%{opacity:.2} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:none} }
+    @keyframes fadeLeft { from{opacity:0;transform:translateX(28px)} to{opacity:1;transform:none} }
+
+    .hero-title {
+      font-family: 'Rajdhani', sans-serif; font-weight: 700;
+      font-size: clamp(2.8rem, 6vw, 5.5rem); line-height: .95; letter-spacing: -1px;
+      color: var(--white); margin-bottom: 2rem; animation: fadeUp .7s .1s ease both;
+    }
+    .hero-title .accent { color: var(--electric); }
+    .hero-title .ghost { -webkit-text-stroke: 1.5px rgba(0,195,255,.4); color: transparent; display: block; }
+    .hero-desc { font-size: 1rem; color: var(--muted); line-height: 1.8; max-width: 440px; margin-bottom: 2.5rem; animation: fadeUp .7s .2s ease both; }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp .7s .3s ease both; }
+
+    .cta-primary {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: .95rem; letter-spacing: 1px; text-transform: uppercase;
+      background: var(--blue); color: var(--white); padding: .85rem 2rem; border-radius: 6px; border: none; cursor: pointer;
+      transition: background .2s, box-shadow .2s; box-shadow: 0 0 0 rgba(0,195,255,0);
+    }
+    .cta-primary:hover { background: var(--bright); box-shadow: 0 0 30px rgba(0,195,255,.35); }
+    .cta-secondary {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: .95rem; letter-spacing: 1px; text-transform: uppercase;
+      background: transparent; color: var(--text); padding: .85rem 2rem; border-radius: 6px;
+      border: 1px solid var(--rim); cursor: pointer; transition: border-color .2s, color .2s;
+    }
+    .cta-secondary:hover { border-color: var(--electric); color: var(--electric); }
+
+    .hero-metrics {
+      display: flex; gap: 2.5rem; margin-top: 3.5rem; flex-wrap: wrap;
+      animation: fadeUp .7s .4s ease both; padding-top: 2.5rem; border-top: 1px solid var(--rim);
+    }
+    .metric { display: flex; flex-direction: column; }
+    .metric-val { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 2.2rem; color: var(--white); line-height: 1; }
+    .metric-val em { color: var(--electric); font-style: normal; }
+    .metric-lbl { font-size: .72rem; color: var(--dim); text-transform: uppercase; letter-spacing: 2px; margin-top: .3rem; }
+
+    /* Terminal */
+    .hero-right { animation: fadeLeft .8s .3s ease both; }
+    .terminal { background: rgba(4,14,34,.95); border: 1px solid var(--rim); border-radius: 12px; overflow: hidden; box-shadow: 0 0 60px rgba(0,80,255,.12), inset 0 1px 0 rgba(255,255,255,.05); }
+    .terminal-bar { background: var(--surface); padding: .8rem 1rem; display: flex; align-items: center; gap: .5rem; border-bottom: 1px solid var(--rim); }
+    .tb-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .tb-d1 { background:#ff5f57; } .tb-d2 { background:#febc2e; } .tb-d3 { background:#28c840; }
+    .tb-title { font-family:'Space Mono',monospace; font-size:.65rem; color:var(--dim); margin-left:auto; letter-spacing:1px; }
+    .terminal-body { padding: 1.5rem; font-family: 'Space Mono', monospace; font-size: .75rem; line-height: 2; }
+    .t-prompt { color: var(--electric); }
+    .t-cmd    { color: var(--white); }
+    .t-out    { color: var(--muted); }
+    .t-ok     { color: #28c840; }
+    .t-hi     { color: var(--ice); }
+    .t-cursor { display: inline-block; width: 8px; height: 14px; background: var(--electric); animation: blink 1s step-end infinite; vertical-align: middle; }
+
+    /* TICKER */
+    .ticker-wrap { overflow: hidden; border-top: 1px solid var(--rim); border-bottom: 1px solid var(--rim); background: rgba(9,24,58,.6); padding: .9rem 0; position: relative; z-index: 1; }
+    .ticker-track { display: flex; gap: 3rem; white-space: nowrap; animation: ticker 25s linear infinite; }
+    .ticker-item { font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: .8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+    .ticker-item .sep { color: var(--electric); font-size: .5rem; }
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* SHARED */
+    .section { position: relative; z-index: 1; padding: 7rem 6%; }
+    .section-alt { background: linear-gradient(180deg, transparent, rgba(9,24,58,.4), transparent); }
+    .tag { display: inline-flex; align-items: center; gap: .6rem; font-family: 'Space Mono', monospace; font-size: .68rem; color: var(--electric); text-transform: uppercase; letter-spacing: 2px; margin-bottom: .8rem; }
+    .tag::before { content: '//'; color: var(--dim); }
+    .heading { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: clamp(2rem, 4vw, 3.2rem); color: var(--white); line-height: 1; letter-spacing: -.5px; margin-bottom: 1.2rem; }
+    .heading em { font-style: normal; color: var(--electric); }
+    .subtext { font-size: .95rem; color: var(--muted); line-height: 1.8; max-width: 520px; }
+
+    /* ABOUT */
+    #about .inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .about-copy p { font-size: .95rem; color: var(--muted); line-height: 1.9; margin-bottom: 1.2rem; }
+    .about-copy strong { color: var(--text); font-weight: 500; }
+
+    .founders { display: flex; flex-direction: column; gap: 1.2rem; }
+    .f-card {
+      display: flex; gap: 1.4rem; align-items: center; padding: 1.5rem; border-radius: 12px;
+      background: var(--deep); border: 1px solid var(--rim);
+      transition: border-color .25s, transform .25s; position: relative; overflow: hidden;
+    }
+    .f-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--electric), transparent); opacity: 0; transition: opacity .3s; }
+    .f-card:hover { border-color: rgba(0,195,255,.3); transform: translateX(6px); }
+    .f-card:hover::before { opacity: 1; }
+    .f-avatar { width: 64px; height: 64px; border-radius: 10px; flex-shrink: 0; background: var(--panel); border: 1px solid var(--edge); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
+    .f-name  { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--white); }
+    .f-title { font-family: 'Space Mono', monospace; font-size: .65rem; color: var(--electric); letter-spacing: 1px; margin: .2rem 0 .5rem; }
+    .f-desc  { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+    .f-badge { font-family: 'Space Mono', monospace; font-size: .6rem; color: var(--electric); border: 1px solid rgba(0,195,255,.25); background: rgba(0,195,255,.06); padding: .25rem .6rem; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+
+    .git-log { background: var(--deep); border: 1px solid var(--rim); border-radius: 10px; overflow: hidden; font-family: 'Space Mono', monospace; font-size: .68rem; line-height: 1.9; margin-top: 2rem; }
+    .git-bar { background: var(--surface); padding: .6rem 1rem; border-bottom: 1px solid var(--rim); display: flex; align-items: center; gap: .4rem; }
+    .git-bar-label { margin-left: auto; font-size: .6rem; color: var(--dim); }
+    .git-body { padding: 1rem 1.3rem; }
+    .git-line-active { color: var(--electric); }
+    .git-line-muted  { color: var(--muted); }
+    .git-hash { color: var(--dim); }
+
+    /* PRODUCT */
+    #product .prod-header { text-align: center; margin-bottom: 5rem; }
+    .prod-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: center; }
+
+    .xyz-frame { background: var(--deep); border: 1px solid var(--rim); border-radius: 16px; overflow: hidden; box-shadow: 0 0 80px rgba(0,80,255,.15); }
+    .xyz-header { background: var(--surface); padding: 1rem 1.5rem; border-bottom: 1px solid var(--rim); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .xyz-logo-text { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.4rem; letter-spacing: 2px; background: linear-gradient(135deg, var(--electric), var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .xyz-status { margin-left: auto; display: flex; align-items: center; gap: .5rem; font-family: 'Space Mono', monospace; font-size: .65rem; color: #28c840; }
+    .xyz-status-dot { width: 6px; height: 6px; border-radius: 50%; background: #28c840; animation: blink 2s ease infinite; }
+    .xyz-body { padding: 2rem 1.5rem; }
+    .xyz-hero-display { text-align: center; padding: 2rem 1rem; }
+    .xyz-big { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: clamp(4rem, 10vw, 7rem); letter-spacing: -2px; line-height: .9; background: linear-gradient(135deg, #fff 0%, var(--ice) 40%, var(--electric) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 40px rgba(0,195,255,.3)); margin-bottom: 1rem; }
+    .xyz-tagline { font-family: 'Space Mono', monospace; font-size: .7rem; color: var(--dim); letter-spacing: 3px; text-transform: uppercase; }
+    .xyz-stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: .8rem; margin-top: 1.5rem; }
+    .xyz-stat { background: var(--panel); border: 1px solid var(--rim); border-radius: 8px; padding: 1rem .8rem; text-align: center; transition: border-color .25s; }
+    .xyz-stat:hover { border-color: rgba(0,195,255,.35); }
+    .xyz-stat-val { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.4rem; color: var(--white); line-height: 1; }
+    .xyz-stat-val em { color: var(--electric); font-style: normal; font-size: 1rem; }
+    .xyz-stat-lbl { font-size: .62rem; color: var(--dim); margin-top: .3rem; letter-spacing: 1px; text-transform: uppercase; }
+    .xyz-badges { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: 1.2rem; justify-content: center; }
+    .badge { font-family: 'Space Mono', monospace; font-size: .65rem; border: 1px solid var(--rim); padding: .25rem .75rem; border-radius: 4px; color: var(--muted); background: rgba(9,24,58,.8); }
+    .badge.hot { border-color: rgba(0,195,255,.35); color: var(--electric); background: rgba(0,195,255,.06); }
+
+    .feat-list { display: flex; flex-direction: column; gap: 1.2rem; }
+    .feat { display: flex; gap: 1.2rem; background: var(--deep); border: 1px solid var(--rim); border-radius: 10px; padding: 1.3rem 1.5rem; transition: border-color .25s, box-shadow .25s; align-items: flex-start; }
+    .feat:hover { border-color: rgba(0,195,255,.3); box-shadow: 0 0 20px rgba(0,80,255,.08); }
+    .feat-icon { width: 40px; height: 40px; border-radius: 8px; flex-shrink: 0; background: rgba(0,195,255,.08); border: 1px solid rgba(0,195,255,.15); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .feat-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem; color: var(--white); margin-bottom: .3rem; }
+    .feat-desc { font-size: .84rem; color: var(--muted); line-height: 1.6; }
+
+    /* SERVICES */
+    #services .svc-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 2rem; margin-bottom: 3rem; }
+    .svc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; }
+    .svc-card { background: var(--deep); border: 1px solid var(--rim); border-radius: 12px; padding: 2rem 1.5rem; transition: border-color .25s, transform .25s; position: relative; overflow: hidden; }
+    .svc-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--electric)); transform: scaleX(0); transform-origin: left; transition: transform .35s; }
+    .svc-card:hover { border-color: rgba(0,195,255,.3); transform: translateY(-5px); }
+    .svc-card:hover::after { transform: scaleX(1); }
+    .svc-num   { font-family: 'Space Mono', monospace; font-size: .65rem; color: var(--dim); margin-bottom: 1.5rem; letter-spacing: 1px; }
+    .svc-icon  { font-size: 1.8rem; margin-bottom: 1rem; }
+    .svc-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--white); margin-bottom: .5rem; }
+    .svc-desc  { font-size: .84rem; color: var(--muted); line-height: 1.7; }
+
+    /* HOW */
+    #how .how-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .steps { display: flex; flex-direction: column; position: relative; }
+    .steps::before { content: ''; position: absolute; left: 1.2rem; top: 2rem; bottom: 2rem; width: 1px; background: linear-gradient(180deg, var(--electric), var(--blue), transparent); }
+    .step { display: flex; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid rgba(17,43,94,.6); transition: .25s; }
+    .step:last-child { border-bottom: none; }
+    .step:hover .step-num { background: var(--electric); color: var(--ink); }
+    .step-num { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; border: 1.5px solid var(--electric); color: var(--electric); display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: .72rem; font-weight: 700; background: var(--ink); transition: background .25s, color .25s; position: relative; z-index: 1; }
+    .step-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem; color: var(--white); margin-bottom: .3rem; }
+    .step-desc  { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+
+    .how-vis { background: var(--deep); border: 1px solid var(--rim); border-radius: 14px; overflow: hidden; }
+    .hv-header { background: var(--surface); padding: .8rem 1.2rem; border-bottom: 1px solid var(--rim); font-family: 'Space Mono', monospace; font-size: .65rem; color: var(--dim); display: flex; justify-content: space-between; }
+    .hv-body { padding: 1.5rem; font-family: 'Space Mono', monospace; font-size: .72rem; line-height: 2; }
+    .hv-line { display: flex; gap: .8rem; align-items: center; padding: .4rem 0; border-bottom: 1px solid rgba(17,43,94,.5); }
+    .hv-line:last-child { border-bottom: none; }
+    .hv-time { color: var(--dim); flex-shrink: 0; width: 50px; }
+    .hv-status.done { color: #28c840; }
+    .hv-status.act  { color: var(--electric); }
+    .hv-status.wait { color: var(--dim); }
+    .hv-txt { color: var(--text); }
+
+    /* TESTI */
+    #testi .testi-header { text-align: center; margin-bottom: 4rem; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; }
+    .testi-card { background: var(--deep); border: 1px solid var(--rim); border-radius: 12px; padding: 2rem; transition: border-color .25s; }
+    .testi-card:hover { border-color: rgba(0,195,255,.3); }
+    .testi-quote { font-family: 'Rajdhani', sans-serif; font-size: 4rem; color: var(--rim); line-height: .6; margin-bottom: 1rem; user-select: none; }
+    .testi-text  { font-size: .88rem; color: var(--text); line-height: 1.8; margin-bottom: 1.5rem; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: .9rem; }
+    .testi-av    { width: 40px; height: 40px; border-radius: 8px; flex-shrink: 0; background: var(--panel); border: 1px solid var(--rim); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .testi-name  { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: .9rem; color: var(--white); }
+    .testi-role  { font-size: .72rem; color: var(--dim); }
+    .testi-stars { color: #f59e0b; font-size: .85rem; letter-spacing: 2px; margin-top: .2rem; }
+
+    /* CTA */
+    #cta { padding: 7rem 6%; }
+    .cta-box { max-width: 860px; margin: 0 auto; background: var(--deep); border: 1px solid rgba(0,195,255,.2); border-radius: 20px; padding: 5rem 4rem; text-align: center; position: relative; overflow: hidden; }
+    .cta-box::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 500px; height: 500px; background: radial-gradient(circle, rgba(0,195,255,.08), transparent 65%); pointer-events: none; }
+    .cta-box .heading { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem; }
+    .cta-box .subtext { margin: 0 auto 2.5rem; text-align: center; }
+    .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .cta-contact { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--rim); }
+    .contact-item { display: flex; align-items: center; gap: .7rem; }
+    .contact-label { font-size: .75rem; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; font-family: 'Space Mono', monospace; }
+    .contact-val   { font-size: .85rem; color: var(--electric); font-family: 'Space Mono', monospace; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--rim); padding: 2.5rem 6%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; position: relative; z-index: 1; }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { font-size: .8rem; color: var(--dim); font-family: 'Rajdhani', sans-serif; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; transition: color .2s; }
+    .footer-links a:hover { color: var(--electric); }
+    .footer-copy { font-size: .72rem; color: var(--dim); font-family: 'Space Mono', monospace; }
+    .footer-copy span { color: var(--electric); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media(max-width: 1024px) {
+      .svc-grid   { grid-template-columns: repeat(2,1fr); }
+      .testi-grid { grid-template-columns: repeat(2,1fr); }
+      .xyz-stats-row { grid-template-columns: repeat(2,1fr); }
+    }
+    @media(max-width: 900px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      #about .inner { grid-template-columns: 1fr; gap: 3rem; }
+      .prod-grid { grid-template-columns: 1fr; }
+      #how .how-inner { grid-template-columns: 1fr; }
+      .how-vis { display: none; }
+    }
+    @media(max-width: 640px) {
+      .nav-links  { display: none; }
+      .hamburger  { display: flex; }
+      .svc-grid   { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .cta-box    { padding: 3rem 1.8rem; }
+      #hero       { padding: 8rem 5% 5rem; }
+      .section    { padding: 5rem 5%; }
+      .cta-contact { flex-direction: column; gap: 1.5rem; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow glow-a"></div>
+  <div class="bg-glow glow-b"></div>
+  <div class="bg-glow glow-c" id="glowC"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">
+      <div class="logo-mark"><span>BS</span></div>
+      <div class="logo-text">
+        <span class="logo-name">TheByteSmith</span>
+        <span class="logo-sub">IT Solutions Co.</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#product">XYZ</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#how">Process</a></li>
+    </ul>
+    <a href="#cta" class="nav-btn">Contact Us</a>
+    <button class="hamburger" id="ham" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div>
+      <div class="hero-eyebrow">
+        <div class="eyebrow-dot"></div>
+        <div class="eyebrow-line"></div>
+        Est. 2024 &nbsp;·&nbsp; thebytesmith.work.gd
+      </div>
+      <h1 class="hero-title">
+        We craft<br>
+        <span class="accent">digital</span><br>
+        <span class="ghost">infrastructure.</span>
+      </h1>
+      <p class="hero-desc">
+        TheByteSmith Co. is an IT solutions outfit built by two 16-year-olds who got tired of waiting for permission. We ship fast, build clean, and don't charge enterprise prices.
+      </p>
+      <div class="hero-ctas">
+        <a href="#product" class="cta-primary">Explore XYZ &rarr;</a>
+        <a href="#about" class="cta-secondary">Our Story</a>
+      </div>
+      <div class="hero-metrics">
+        <div class="metric"><div class="metric-val">10<em>+</em></div><div class="metric-lbl">Projects Shipped</div></div>
+        <div class="metric"><div class="metric-val">2<em>x</em></div><div class="metric-lbl">Teen Founders</div></div>
+        <div class="metric"><div class="metric-val">0<em>%</em></div><div class="metric-lbl">Corporate Fluff</div></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="tb-dot tb-d1"></div>
+          <div class="tb-dot tb-d2"></div>
+          <div class="tb-dot tb-d3"></div>
+          <div class="tb-title">thebytesmith — zsh</div>
+        </div>
+        <div class="terminal-body">
+          <div><span class="t-prompt">~/bytesmith $</span> <span class="t-cmd">whoami</span></div>
+          <div class="t-out">TheByteSmith Co. &nbsp;·&nbsp; IT Solutions</div>
+          <br>
+          <div><span class="t-prompt">~/bytesmith $</span> <span class="t-cmd">cat founders.json</span></div>
+          <div class="t-out">{</div>
+          <div class="t-out">&nbsp;&nbsp;<span class="t-hi">"team"</span>: [</div>
+          <div class="t-out">&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="t-hi">"role"</span>: "CEO", <span class="t-hi">"age"</span>: 16 },</div>
+          <div class="t-out">&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="t-hi">"role"</span>: "CTO", <span class="t-hi">"age"</span>: 16 }</div>
+          <div class="t-out">&nbsp;&nbsp;],</div>
+          <div class="t-out">&nbsp;&nbsp;<span class="t-hi">"motto"</span>: <span class="t-ok">"Ship it."</span></div>
+          <div class="t-out">}</div>
+          <br>
+          <div><span class="t-prompt">~/bytesmith $</span> <span class="t-cmd">./deploy XYZ --env prod</span></div>
+          <div class="t-ok">✔ Build complete in 1.2s</div>
+          <div class="t-ok">✔ Tests passed (47/47)</div>
+          <div class="t-ok">✔ Deployed to edge network</div>
+          <div class="t-out">→ <span class="t-hi">thebytesmith.work.gd</span></div>
+          <br>
+          <div><span class="t-prompt">~/bytesmith $</span> <span class="t-cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item">Web Development<span class="sep">◆</span></span>
+      <span class="ticker-item">Cloud Infrastructure<span class="sep">◆</span></span>
+      <span class="ticker-item">Product XYZ<span class="sep">◆</span></span>
+      <span class="ticker-item">API Engineering<span class="sep">◆</span></span>
+      <span class="ticker-item">Process Automation<span class="sep">◆</span></span>
+      <span class="ticker-item">Security Auditing<span class="sep">◆</span></span>
+      <span class="ticker-item">Tech Consulting<span class="sep">◆</span></span>
+      <span class="ticker-item">UI / UX Design<span class="sep">◆</span></span>
+      <span class="ticker-item">Web Development<span class="sep">◆</span></span>
+      <span class="ticker-item">Cloud Infrastructure<span class="sep">◆</span></span>
+      <span class="ticker-item">Product XYZ<span class="sep">◆</span></span>
+      <span class="ticker-item">API Engineering<span class="sep">◆</span></span>
+      <span class="ticker-item">Process Automation<span class="sep">◆</span></span>
+      <span class="ticker-item">Security Auditing<span class="sep">◆</span></span>
+      <span class="ticker-item">Tech Consulting<span class="sep">◆</span></span>
+      <span class="ticker-item">UI / UX Design<span class="sep">◆</span></span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="inner">
+      <div class="about-copy reveal">
+        <div class="tag">About Us</div>
+        <h2 class="heading">Two teens.<br><em>One company.</em></h2>
+        <p>TheByteSmith Co. started because we got tired of watching clunky, overpriced software become the default. We knew we could build better — so we did.</p>
+        <p>We're <strong>16 years old</strong>, and we think that's a feature, not a bug. We're closer to the problems, faster to adapt, and we don't have years of "that's how it's always been done" holding us back.</p>
+        <p>Our flagship product, <strong>XYZ</strong>, is the result of months of late nights, relentless iteration, and the kind of stubbornness that only comes from genuinely caring about what you build.</p>
+        <div class="git-log">
+          <div class="git-bar">
+            <div class="tb-dot tb-d1"></div><div class="tb-dot tb-d2"></div><div class="tb-dot tb-d3"></div>
+            <span class="git-bar-label">git log --oneline</span>
+          </div>
+          <div class="git-body">
+            <div class="git-line-active">* <span class="git-hash">a3f9d2c</span> feat: shipped XYZ v1.0 to production 🚀</div>
+            <div class="git-line-muted">* <span class="git-hash">b7e12c4</span> fix: finally squashed that 3am bug</div>
+            <div class="git-line-muted">* <span class="git-hash">c9a4510</span> chore: added caffeine to pipeline</div>
+            <div class="git-line-muted">* <span class="git-hash">d1f3881</span> init: TheByteSmith Co. ⚡</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="founders reveal" style="transition-delay:.15s">
+        <div class="f-card">
+          <div class="f-avatar">👨‍💻</div>
+          <div style="flex:1">
+            <div class="f-name">Founder One</div>
+            <div class="f-title">CEO · Full-Stack Engineer</div>
+            <div class="f-desc">Architects the big picture, ships the fine print. Obsessed with performance and clean code.</div>
+          </div>
+          <div class="f-badge">AGE: 16</div>
+        </div>
+        <div class="f-card">
+          <div class="f-avatar">🧠</div>
+          <div style="flex:1">
+            <div class="f-name">Founder Two</div>
+            <div class="f-title">CTO · Systems Architect</div>
+            <div class="f-desc">Lives in the terminal. Turns impossible requirements into working prototypes overnight.</div>
+          </div>
+          <div class="f-badge">AGE: 16</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT -->
+  <section id="product" class="section section-alt">
+    <div class="prod-header reveal">
+      <div class="tag" style="justify-content:center">Flagship Product</div>
+      <h2 class="heading" style="text-align:center; font-size:clamp(2rem,5vw,3.5rem)">Introducing <em>XYZ</em></h2>
+      <p class="subtext" style="text-align:center; margin:0 auto">The product we've been quietly building. Engineered for speed, built for scale, designed so it actually makes sense to use.</p>
+    </div>
+    <div class="prod-grid">
+      <div class="reveal">
+        <div class="xyz-frame">
+          <div class="xyz-header">
+            <div class="xyz-logo-text">XYZ</div>
+            <div class="xyz-badges" style="margin:0">
+              <span class="badge hot">v1.0 Stable</span>
+              <span class="badge">Open Beta</span>
+            </div>
+            <div class="xyz-status">
+              <div class="xyz-status-dot"></div>All Systems Go
+            </div>
+          </div>
+          <div class="xyz-body">
+            <div class="xyz-hero-display">
+              <div class="xyz-big">XYZ</div>
+              <div class="xyz-tagline">The product. The solution. Yours.</div>
+            </div>
+            <div class="xyz-stats-row">
+              <div class="xyz-stat"><div class="xyz-stat-val">99<em>.9%</em></div><div class="xyz-stat-lbl">Uptime</div></div>
+              <div class="xyz-stat"><div class="xyz-stat-val">&lt;<em>2ms</em></div><div class="xyz-stat-lbl">Latency</div></div>
+              <div class="xyz-stat"><div class="xyz-stat-val">256<em>-bit</em></div><div class="xyz-stat-lbl">Encryption</div></div>
+              <div class="xyz-stat"><div class="xyz-stat-val">∞</div><div class="xyz-stat-lbl">Scale</div></div>
+            </div>
+            <div class="xyz-badges">
+              <span class="badge">Free Tier</span>
+              <span class="badge hot">Edge Deployed</span>
+              <span class="badge">REST API</span>
+              <span class="badge">SOC 2 Ready</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="feat-list reveal" style="transition-delay:.15s">
+        <div class="feat"><div class="feat-icon">⚡</div><div><div class="feat-title">Zero-overhead Performance</div><div class="feat-desc">No unnecessary abstractions, no bloated dependencies — just fast execution where it counts.</div></div></div>
+        <div class="feat"><div class="feat-icon">🔒</div><div><div class="feat-title">Security by Default</div><div class="feat-desc">End-to-end encryption and zero-trust architecture baked in from day one — not bolted on after.</div></div></div>
+        <div class="feat"><div class="feat-icon">🔌</div><div><div class="feat-title">Drop-in Integration</div><div class="feat-desc">Clean REST API with thorough docs. Get XYZ into your stack in under 10 minutes.</div></div></div>
+        <div class="feat"><div class="feat-icon">📊</div><div><div class="feat-title">Real-time Observability</div><div class="feat-desc">Live dashboards, structured logs, and alerting built in. Know what's happening, always.</div></div></div>
+        <div style="margin-top:.5rem"><a href="#cta" class="cta-primary" style="display:inline-flex">Get Early Access &rarr;</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="section">
+    <div class="svc-header">
+      <div>
+        <div class="tag reveal">What We Do</div>
+        <h2 class="heading reveal">Our <em>Services</em></h2>
+      </div>
+      <p class="subtext reveal" style="max-width:320px; text-align:right">From a single feature to a full system — we scope, build, and deliver.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card reveal"><div class="svc-num">01 / 06</div><div class="svc-icon">🌐</div><div class="svc-title">Web Development</div><div class="svc-desc">Custom sites and web apps built with modern stacks. Fast, accessible, and built to last.</div></div>
+      <div class="svc-card reveal" style="transition-delay:.08s"><div class="svc-num">02 / 06</div><div class="svc-icon">☁️</div><div class="svc-title">Cloud Infrastructure</div><div class="svc-desc">Setup, migration, and management across AWS, GCP, and Vercel. We speak cloud fluently.</div></div>
+      <div class="svc-card reveal" style="transition-delay:.16s"><div class="svc-num">03 / 06</div><div class="svc-icon">🤖</div><div class="svc-title">Process Automation</div><div class="svc-desc">We automate the repetitive so you can focus on what matters. Bots, pipelines, scrapers — done right.</div></div>
+      <div class="svc-card reveal" style="transition-delay:.08s"><div class="svc-num">04 / 06</div><div class="svc-icon">🔐</div><div class="svc-title">Security Auditing</div><div class="svc-desc">We find your vulnerabilities before someone else does. Ethical, thorough, and actionable.</div></div>
+      <div class="svc-card reveal" style="transition-delay:.16s"><div class="svc-num">05 / 06</div><div class="svc-icon">🧩</div><div class="svc-title">API Development</div><div class="svc-desc">REST or GraphQL — clean, versioned, documented APIs your team will actually enjoy using.</div></div>
+      <div class="svc-card reveal" style="transition-delay:.24s"><div class="svc-num">06 / 06</div><div class="svc-icon">💬</div><div class="svc-title">Tech Consulting</div><div class="svc-desc">Honest technical advice without the consultant markup. We tell you what you need to hear.</div></div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section id="how" class="section section-alt">
+    <div class="how-inner">
+      <div>
+        <div class="tag reveal">Our Process</div>
+        <h2 class="heading reveal">How we <em>work</em></h2>
+        <p class="subtext reveal" style="margin-bottom:2.5rem">No hand-holding required. Here's how a typical engagement goes from zero to shipped.</p>
+        <div class="steps reveal" style="transition-delay:.1s">
+          <div class="step"><div class="step-num">01</div><div><div class="step-title">You brief us</div><div class="step-desc">Tell us the problem, scope, and deadline. No template forms — just a real conversation.</div></div></div>
+          <div class="step"><div class="step-num">02</div><div><div class="step-title">We architect</div><div class="step-desc">We map the solution, pick the right stack, and share a clear plan before writing a single line.</div></div></div>
+          <div class="step"><div class="step-num">03</div><div><div class="step-title">We build</div><div class="step-desc">Focused execution with regular updates. You're never in the dark about progress.</div></div></div>
+          <div class="step"><div class="step-num">04</div><div><div class="step-title">We test</div><div class="step-desc">Full test coverage, edge case hunting, and performance benchmarks before anything goes live.</div></div></div>
+          <div class="step"><div class="step-num">05</div><div><div class="step-title">We ship</div><div class="step-desc">Deployment, handoff docs, post-launch support. We don't vanish when the project ends.</div></div></div>
+        </div>
+      </div>
+      <div class="how-vis reveal" style="transition-delay:.2s">
+        <div class="hv-header"><span>build_pipeline.log</span><span>XYZ · v1.0.0</span></div>
+        <div class="hv-body">
+          <div class="hv-line"><span class="hv-time">09:01</span><span class="hv-status done">✔</span><span class="hv-txt">Brief received &amp; scoped</span></div>
+          <div class="hv-line"><span class="hv-time">09:14</span><span class="hv-status done">✔</span><span class="hv-txt">Architecture finalized</span></div>
+          <div class="hv-line"><span class="hv-time">11:30</span><span class="hv-status done">✔</span><span class="hv-txt">Core modules built</span></div>
+          <div class="hv-line"><span class="hv-time">13:45</span><span class="hv-status done">✔</span><span class="hv-txt">API endpoints live</span></div>
+          <div class="hv-line"><span class="hv-time">15:20</span><span class="hv-status done">✔</span><span class="hv-txt">Test suite passing (47/47)</span></div>
+          <div class="hv-line"><span class="hv-time">16:00</span><span class="hv-status act">▶</span><span class="hv-txt">Deploying to edge…</span></div>
+          <div class="hv-line"><span class="hv-time">16:02</span><span class="hv-status wait">·</span><span class="hv-txt" style="color:var(--dim)">Post-launch handoff</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testi" class="section">
+    <div class="testi-header">
+      <div class="tag reveal" style="justify-content:center">Social Proof</div>
+      <h2 class="heading reveal" style="text-align:center">People trust <em>ByteSmith</em></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-quote">"</div>
+        <div class="testi-text">Honestly shocked by the quality. I hired two teenagers half-expecting a rough prototype. What I got was production-ready software that my senior dev was jealous of.</div>
+        <div class="testi-author"><div class="testi-av">👩‍💼</div><div><div class="testi-name">Priya M.</div><div class="testi-role">Founder, NovaSpark Labs</div><div class="testi-stars">★★★★★</div></div></div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:.1s">
+        <div class="testi-quote">"</div>
+        <div class="testi-text">XYZ solved a problem we'd been hacking around for 8 months. Clean API, zero-friction setup, and the support was actually helpful — not just a link to the docs.</div>
+        <div class="testi-author"><div class="testi-av">👨‍💻</div><div><div class="testi-name">Rahul S.</div><div class="testi-role">Lead Engineer, Pixelshift</div><div class="testi-stars">★★★★★</div></div></div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:.2s">
+        <div class="testi-quote">"</div>
+        <div class="testi-text">They automated a chunk of our backend over a single weekend. Cost us less than one SaaS subscription month. These guys are dangerous — in the best way possible.</div>
+        <div class="testi-author"><div class="testi-av">🧑‍🚀</div><div><div class="testi-name">Arjun N.</div><div class="testi-role">CTO, Orbitly</div><div class="testi-stars">★★★★★</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-box reveal">
+      <div class="tag" style="justify-content:center">Get Started</div>
+      <h2 class="heading">Let's build<br><em>something</em> real.</h2>
+      <p class="subtext">Whether you need XYZ, a custom project, or just honest tech advice — we're reachable and we reply fast. Actually fast.</p>
+      <div class="cta-actions">
+        <a href="mailto:hello@thebytesmith.work.gd" class="cta-primary">Drop us an Email 📬</a>
+        <a href="#product" class="cta-secondary">View XYZ Docs →</a>
+      </div>
+      <div class="cta-contact">
+        <div class="contact-item">
+          <span style="font-size:1.1rem">📧</span>
+          <div><div class="contact-label">Email</div><div class="contact-val">hello@thebytesmith.work.gd</div></div>
+        </div>
+        <div class="contact-item">
+          <span style="font-size:1.1rem">🌐</span>
+          <div><div class="contact-label">Website</div><div class="contact-val">thebytesmith.work.gd</div></div>
+        </div>
+        <div class="contact-item">
+          <span style="font-size:1.1rem">⚡</span>
+          <div><div class="contact-label">Response Time</div><div class="contact-val">&lt; 24 hours</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="logo">
+      <div class="logo-mark"><span>BS</span></div>
+      <div class="logo-text">
+        <span class="logo-name" style="font-size:.95rem">TheByteSmith</span>
+        <span class="logo-sub">IT Solutions Co.</span>
+      </div>
+    </a>
+    <ul class="footer-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#product">XYZ</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#cta">Contact</a></li>
+    </ul>
+    <div class="footer-copy">
+      © 2025 TheByteSmith Co. &nbsp;·&nbsp; Built with <span>♥</span> + caffeine &nbsp;·&nbsp; <span>thebytesmith.work.gd</span>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Glow parallax
+    const gc = document.getElementById('glowC');
+    document.addEventListener('mousemove', e => {
+      const x = (e.clientX / window.innerWidth - .5) * 40;
+      const y = (e.clientY / window.innerHeight - .5) * 40;
+      gc.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+    }, { passive: true });
+
+    // Mobile nav
+    const ham = document.getElementById('ham');
+    const nl  = document.getElementById('navLinks');
+    let open = false;
+    ham.addEventListener('click', () => {
+      open = !open;
+      Object.assign(nl.style, open ? {
+        display: 'flex', flexDirection: 'column', position: 'absolute',
+        top: '68px', left: '0', right: '0',
+        background: 'rgba(2,10,24,.97)', padding: '1.5rem 6%',
+        borderBottom: '1px solid var(--rim)', backdropFilter: 'blur(20px)',
+        gap: '1.2rem', zIndex: '199'
+      } : { display: 'none' });
+    });
+
+    // Close nav on link click
+    nl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      open = false; nl.style.display = 'none';
+    }));
+  </script>
+</body>
+</html>
