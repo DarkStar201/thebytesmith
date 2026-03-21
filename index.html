@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NovaBit — IT Solutions</title>
+
+  <!-- ─── FAVICON ───────────────────────────────────────────
+       Place all favicon files in the same folder as index.html.
+       Files needed:
+         favicon.svg        → modern browsers (auto-generated below)
+         favicon.ico        → legacy fallback (convert favicon.svg online
+                              e.g. https://favicon.io or https://realfavicongenerator.net)
+         apple-touch-icon.png → 180×180 px, for iOS home-screen bookmarks
+         favicon-32x32.png    → 32×32 px PNG
+         favicon-16x16.png    → 16×16 px PNG
+  ──────────────────────────────────────────────────────────── -->
+
+  <!-- SVG favicon — scales perfectly at any size, supports light/dark -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+
+  <!-- PNG fallbacks (generated from favicon.svg) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/>
+
+  <!-- Legacy .ico fallback — catches very old browsers -->
+  <link rel="shortcut icon" href="favicon.ico"/>
+
+  <!-- Apple touch icon — shown when user adds site to iOS home screen -->
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+
+  <!-- Browser tab / address bar colour (matches --blue token) -->
+  <meta name="theme-color" content="#1a65d6"/>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css"/>
+
+  <!--
+    ─── FAVICON ───────────────────────────────────────────────
+    Replace the href values below with your own favicon files.
+    Keep all three lines for broadest browser/device support.
+
+    Recommended file set (place in the same folder as index.html):
+      favicon.svg       — modern browsers (best quality, scales perfectly)
+      favicon-32x32.png — standard desktop tab icon
+      favicon.ico       — legacy fallback (IE, older browsers)
+
+    Free tools to generate all three from one image:
+      https://favicon.io   |   https://realfavicongenerator.net
+    ─────────────────────────────────────────────────────────── -->
+  <link rel="icon"             type="image/svg+xml" href="favicon.svg"/>
+  <link rel="icon"             type="image/png"     href="favicon-32x32.png" sizes="32x32"/>
+  <link rel="shortcut icon"    type="image/x-icon"  href="favicon.ico"/>
+
+  <!-- iOS / Android home-screen icon (optional) -->
+  <link rel="apple-touch-icon"                      href="favicon-180x180.png"/>
+
+  <!--
+    ─── FAVICON ───────────────────────────────────────────────
+    Replace the href values below with your own favicon files.
+    Keep all three lines for best browser/device coverage.
+
+    Recommended favicon files to place in the same folder:
+      • favicon.svg      — modern browsers (scales perfectly)
+      • favicon.png      — fallback for older browsers (32×32 px)
+      • apple-touch-icon.png — iOS home screen icon (180×180 px)
+
+    Free tools to generate all sizes from one image:
+      https://realfavicongenerator.net
+      https://favicon.io
+    ─────────────────────────────────────────────────────────── -->
+  <link rel="icon"             type="image/svg+xml" href="favicon.svg"/>
+  <link rel="icon"             type="image/png"     href="favicon.png" sizes="32x32"/>
+  <link rel="apple-touch-icon"                      href="apple-touch-icon.png"/>
+</head>
+<body>
+
+  <!-- ─── THEME TOGGLE ─── -->
+  <div class="theme-toggle" role="group" aria-label="Theme switcher">
+    <button class="theme-btn active" id="btn-light" onclick="setTheme('light')" title="Light mode" aria-label="Light mode">☀️</button>
+    <button class="theme-btn"        id="btn-dark"  onclick="setTheme('dark')"  title="Dark mode"  aria-label="Dark mode">🌙</button>
+  </div>
+
+
+  <!-- ─── NAV ─── -->
+  <nav>
+    <div class="nav-inner">
+
+      <a href="#" class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <span class="logo-name">NovaBit</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#product">Product</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="#testimonials" class="btn btn-outline">Reviews</a>
+        <a href="#cta"          class="btn btn-solid">Get in touch</a>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- ─── HERO ─── -->
+  <section id="hero">
+    <div class="hero-inner">
+
+      <div class="hero-left reveal">
+        <div class="hero-kicker">
+          <div class="hero-kicker-dot"></div>
+          <span class="tag">IT Solutions · Est. 2024</span>
+        </div>
+
+        <h1 class="hero-headline">
+          Smart tech.<br>
+          <em>Simpler</em> than<br>
+          you'd expect.
+        </h1>
+
+        <p class="hero-body">
+          NovaBit is an IT solutions company built by two 16-year-olds who got tired of
+          overcomplicated, overpriced software. We build things that actually work.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#product" class="btn btn-solid">See our product &rarr;</a>
+          <a href="#about"   class="btn btn-outline">Our story</a>
+        </div>
+      </div>
+
+      <div class="hero-right reveal">
+        <div class="hero-visual">
+          <div class="hero-visual-inner">
+            <div class="hero-xyz">XYZ</div>
+            <div class="hero-chip">
+              <span class="hero-chip-dot"></span>
+              Live &amp; available now
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hero-stats reveal">
+      <div class="hero-stat">
+        <div class="stat-val">12+</div>
+        <div class="stat-desc">Projects shipped</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-val">2</div>
+        <div class="stat-desc">Teenage founders, one big vision</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-val">100%</div>
+        <div class="stat-desc">No corporate fluff</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─── MARQUEE ─── -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <span class="marquee-item">Web Development</span>
+      <span class="marquee-item">Cloud Infrastructure</span>
+      <span class="marquee-item">Product — XYZ</span>
+      <span class="marquee-item">API Integration</span>
+      <span class="marquee-item">Automation</span>
+      <span class="marquee-item">Cybersecurity</span>
+      <span class="marquee-item">Tech Consulting</span>
+      <span class="marquee-item">UI / UX Design</span>
+      <!-- duplicated for seamless loop -->
+      <span class="marquee-item">Web Development</span>
+      <span class="marquee-item">Cloud Infrastructure</span>
+      <span class="marquee-item">Product — XYZ</span>
+      <span class="marquee-item">API Integration</span>
+      <span class="marquee-item">Automation</span>
+      <span class="marquee-item">Cybersecurity</span>
+      <span class="marquee-item">Tech Consulting</span>
+      <span class="marquee-item">UI / UX Design</span>
+    </div>
+  </div>
+
+
+  <!-- ─── ABOUT ─── -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-left reveal">
+          <span class="tag">Who we are</span>
+          <h2 class="section-heading" style="margin-top:.8rem">Two builders.<br>One obsession.</h2>
+
+          <p class="about-body" style="margin-top:1.5rem">
+            We started NovaBit from scratch — no investors, no office, no VC money. Just two
+            16-year-olds, laptops, and a shared belief that good software shouldn't require a
+            six-figure budget.
+          </p>
+          <p class="about-body">
+            We move fast, stay lean, and genuinely care about every project we take on. Our
+            product XYZ is the result of months of building, breaking, and rebuilding until it
+            was actually worth shipping.
+          </p>
+
+          <a href="#product" class="about-link">See what we built <span>→</span></a>
+        </div>
+
+        <div class="about-right reveal">
+          <div class="founders">
+
+            <div class="founder-card">
+              <div class="founder-avatar">👨‍💻</div>
+              <div>
+                <div class="founder-name">Founder One</div>
+                <div class="founder-role">CEO · Full-Stack Developer</div>
+              </div>
+              <span class="founder-pill">Age 16</span>
+            </div>
+
+            <div class="founder-card">
+              <div class="founder-avatar">🧠</div>
+              <div>
+                <div class="founder-name">Founder Two</div>
+                <div class="founder-role">CTO · Systems Architect</div>
+              </div>
+              <span class="founder-pill">Age 16</span>
+            </div>
+
+            <div class="about-quote">
+              <p>"We build things we'd actually want to use ourselves. That's the whole filter."</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─── PRODUCT ─── -->
+  <section id="product">
+    <div class="container">
+
+      <div class="product-header reveal">
+        <span class="tag">Our flagship product</span>
+        <h2 class="section-heading">Meet XYZ</h2>
+        <p>The product we've been building since day one. Designed to be fast, reliable, and
+           genuinely useful — without the complexity you don't need.</p>
+      </div>
+
+      <div class="product-center-card reveal">
+        <div class="xyz-name">XYZ</div>
+        <p class="xyz-sub">Replacing clunky old solutions with something that just works.
+           Clean interface, powerful engine.</p>
+        <div class="xyz-tags">
+          <span class="xyz-tag">v1.0 Stable</span>
+          <span class="xyz-tag">Open Beta</span>
+          <span class="xyz-tag">Free Tier</span>
+          <span class="xyz-tag">API Ready</span>
+        </div>
+      </div>
+
+      <div class="product-features reveal">
+        <div class="pf-item">
+          <div class="pf-icon">⚡</div>
+          <div class="pf-title">Fast by default</div>
+          <p class="pf-desc">No unnecessary overhead. XYZ is architected for speed at every
+             layer — so you never wait.</p>
+        </div>
+        <div class="pf-item">
+          <div class="pf-icon">🔒</div>
+          <div class="pf-title">Secure by design</div>
+          <p class="pf-desc">Security isn't bolted on at the end. It's woven into the
+             foundation from the very first line.</p>
+        </div>
+        <div class="pf-item">
+          <div class="pf-icon">🔌</div>
+          <div class="pf-title">Drops right in</div>
+          <p class="pf-desc">Clean APIs, clear documentation, and zero-friction onboarding.
+             Up and running in minutes.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─── SERVICES ─── -->
+  <section id="services">
+    <div class="container">
+
+      <div class="services-header reveal">
+        <div>
+          <span class="tag">What we do</span>
+          <h2 class="section-heading" style="margin-top:.8rem">Services</h2>
+        </div>
+        <a href="#cta" class="btn btn-solid">Start a project</a>
+      </div>
+
+      <div class="reveal">
+        <div class="service-row">
+          <span class="service-num">01</span>
+          <span class="service-name">Web Development</span>
+          <span class="service-desc-col">Custom websites and apps built with modern stacks. Fast, accessible, built to convert.</span>
+          <span class="service-arrow">→</span>
+        </div>
+        <div class="service-row">
+          <span class="service-num">02</span>
+          <span class="service-name">Cloud Infrastructure</span>
+          <span class="service-desc-col">Setup, migration, and management. AWS, GCP, Vercel — we speak cloud fluently.</span>
+          <span class="service-arrow">→</span>
+        </div>
+        <div class="service-row">
+          <span class="service-num">03</span>
+          <span class="service-name">Automation</span>
+          <span class="service-desc-col">We automate repetitive workflows so your team focuses on work that actually matters.</span>
+          <span class="service-arrow">→</span>
+        </div>
+        <div class="service-row">
+          <span class="service-num">04</span>
+          <span class="service-name">API Development</span>
+          <span class="service-desc-col">REST or GraphQL — clean, documented, and a genuine pleasure to integrate with.</span>
+          <span class="service-arrow">→</span>
+        </div>
+        <div class="service-row">
+          <span class="service-num">05</span>
+          <span class="service-name">Security Audits</span>
+          <span class="service-desc-col">Ethical, thorough, and affordable. We find the gaps before someone else does.</span>
+          <span class="service-arrow">→</span>
+        </div>
+        <div class="service-row">
+          <span class="service-num">06</span>
+          <span class="service-name">Tech Consulting</span>
+          <span class="service-desc-col">Real, honest advice with no upselling. We tell you what you actually need.</span>
+          <span class="service-arrow">→</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─── PROCESS ─── -->
+  <section id="process">
+    <div class="container">
+
+      <div class="process-header reveal">
+        <span class="tag">How it works</span>
+        <h2 class="section-heading">Simple process.<br>Real results.</h2>
+        <p>No lengthy onboarding, no back-and-forth. We keep it direct.</p>
+      </div>
+
+      <div class="process-steps">
+        <div class="step reveal">
+          <div class="step-num-wrap">1</div>
+          <div class="step-title">You reach out</div>
+          <p class="step-desc">Tell us your problem or idea. A message is enough to get started.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num-wrap">2</div>
+          <div class="step-title">We plan it</div>
+          <p class="step-desc">We map the solution, pick the right tools, and share a clear brief.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num-wrap">3</div>
+          <div class="step-title">We build it</div>
+          <p class="step-desc">Heads down and building fast. We keep you updated throughout.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num-wrap">4</div>
+          <div class="step-title">We ship it</div>
+          <p class="step-desc">Tested, polished, deployed. Nothing leaves our hands half-finished.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─── TESTIMONIALS ─── -->
+  <section id="testimonials">
+    <div class="container">
+
+      <div class="testi-header reveal">
+        <div>
+          <span class="tag">Reviews</span>
+          <h2 class="section-heading" style="margin-top:.8rem">What clients say</h2>
+        </div>
+      </div>
+
+      <div class="testi-grid">
+
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-body">"I was skeptical hiring two teenagers. Six weeks later I'm showing our new site off at every pitch. Genuinely blown away."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">👩‍💼</div>
+            <div>
+              <div class="testi-name">Priya M.</div>
+              <div class="testi-role">Founder, NovaSpark</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-body">"XYZ solved a problem we'd been patching workarounds for all year. It's clean, fast, and the support actually helps."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">👨‍💻</div>
+            <div>
+              <div class="testi-name">Rahul S.</div>
+              <div class="testi-role">Lead Dev, Pixelshift</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-body">"They automated half our backend over a weekend. Cost less than a SaaS subscription. Will absolutely use them again."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">🧑‍🚀</div>
+            <div>
+              <div class="testi-name">Arjun N.</div>
+              <div class="testi-role">CTO, Orbitly</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─── CTA ─── -->
+  <section id="cta">
+    <div class="container">
+      <div class="cta-inner reveal">
+        <span class="tag">Ready?</span>
+        <h2 class="cta-heading">Let's build<br>something great.</h2>
+        <p class="cta-sub">
+          Whether you want XYZ, a custom project, or just a straight answer on a tech decision —
+          we're fast to reply and easy to work with.
+        </p>
+        <div class="cta-actions">
+          <a href="mailto:hello@novabit.dev" class="btn btn-white">Email us →</a>
+          <a href="#product"                 class="btn btn-white-ghost">See XYZ first</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="container">
+
+      <div class="footer-inner">
+
+        <div class="footer-brand">
+          <div class="logo">
+            <div class="logo-mark">
+              <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+          </div>
+          <span class="footer-brand-name">NovaBit</span>
+          <p>IT solutions by two 16-year-olds who actually care about what they build.</p>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Company</div>
+          <ul class="footer-links">
+            <li><a href="#about">About us</a></li>
+            <li><a href="#product">XYZ Product</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#process">How it works</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <ul class="footer-links">
+            <li><a href="mailto:hello@novabit.dev">hello@novabit.dev</a></li>
+            <li><a href="#">Twitter / X</a></li>
+            <li><a href="#">LinkedIn</a></li>
+            <li><a href="#">GitHub</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 NovaBit. All rights reserved.</p>
+        <a href="#">Privacy Policy</a>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ─── SCRIPTS ─── -->
+  <script>
+    /* ── Theme ── */
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('nb-theme', t);
+      document.getElementById('btn-light').classList.toggle('active', t === 'light');
+      document.getElementById('btn-dark').classList.toggle('active',  t === 'dark');
+
+      /* Keep theme-color meta in sync with active theme */
+      document.querySelector('meta[name="theme-color"]')
+        .setAttribute('content', t === 'dark' ? '#080f1e' : '#1a65d6');
+    }
+
+    /* Restore saved preference or follow OS setting on first visit */
+    (function () {
+      const saved       = localStorage.getItem('nb-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(saved || (prefersDark ? 'dark' : 'light'));
+    })();
+
+    /* ── Scroll reveal ── */
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach((el, i) => {
+      el.style.transitionDelay = `${(i % 4) * 0.08}s`;
+      io.observe(el);
+    });
+
+    /* ── Nav shadow on scroll ── */
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.boxShadow = window.scrollY > 10
+        ? '0 2px 20px rgba(0,0,0,.08)'
+        : 'none';
+    });
+  </script>
+
+</body>
+</html>
